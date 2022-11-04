@@ -1,0 +1,14 @@
+extends layout
+
+block content
+  h1= title
+  - var results = [{"Employee_Name": "Raghava","Employee_Salary":4000,"Employee_Id": 554035,"Employee_Department":"ACS"},{"Employee_Name": "Venakt","Employee_Salary":4300,"Employee_Id": 554075,"Employee_Department":"ACS"},{"Employee_Name": "Ajay","Employee_Salary":4030,"Employee_Id": 554025,"Employee_Department":"ACS"},{"Employee_Name": "Manoj","Employee_Salary":4200,"Employee_Id": 554015,"Employee_Department":"ACS"}]
+  div.container-fluid 
+    div.row 
+        each item, index in results
+            div.col-sm-2(onclick=`buy(${index})`) Emp Name: #{item["Employee_Name"]} <br> Emp Salary: #{item["Employee_Salary"]} <br> Emp Id: #{item["Employee_Id"]} <br> Emp Department: #{item["Employee_Department"]}
+
+  script.
+    function buy (index) {
+      alert("Employee index" + index)
+    }

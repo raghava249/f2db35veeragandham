@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  P this is assignment 10
+  button(type='button',class='btn btn-success',onclick="doBump()") Press Me 
+  div#bump Bump the count 
+  script.
+    let count=0;
+    let bump=1;
+    function doBump(){
+      count=count+bump
+      bump=bump+1
+      document.getElementById('bump').innerHTML= "Count "+ count +" Bump "+bump;
+    };
