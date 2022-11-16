@@ -88,5 +88,19 @@ exports.Employee_create_post = async function(req, res) {
     catch(err){ 
         res.status(500); 
         res.send(`{"error": ${err}}`); 
-    }   
+    }
+
 }; 
+// Handle Employee delete on DELETE. 
+exports.Employee_delete = async function(req, res) { 
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await Employee.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
+}; 
+ 
