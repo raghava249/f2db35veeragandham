@@ -1,0 +1,49 @@
+extends layout 
+ 
+block content 
+  h1(class="container-fluid p-2 bg-secondary text-dark text-center")= title
+  if (toShow == null) 
+    h2 No instance to update  
+  else 
+    - let Employeeid = toShow._id 
+    - let Employee_Name = toShow.Employee_Name
+    - let Employee_Salary = toShow.Employee_Salary
+    - let Employee_Id = toShow.Employee_Id
+    - let Employee_Department = toShow.Employee_Department
+    
+    div.row(class='mb-2 text-center text-danger',style='background-color:darkslategrey')
+        div.mr-1 ID is 
+        div #{Employeeid} 
+    - let actionid = "/resource/Employee/" + Employeeid 
+    form(id='EmployeeForm',class = 'p-2 text-center text-dark',style='background-color:blue' action= actionid, method="PUT") 
+        div.form-group 
+            label.EmployeeAttr(for='Employee_Name') Employee_Name
+            input#Employee_Name(type='text', name='Employee_Name', value= Employee_Name ) 
+        div.form-group 
+            label.EmployeeAttr(for='Employee_Salary') Employee_Salary 
+            input#Employee_Salary(type='text', name='Employee_Salary', value= Employee_Salary  ) 
+        div.form-group 
+            label.EmployeeAttr(for='Employee_Id') Employee_Id
+            input#Employee_Id(type='number', name='Employee_Id', value= Employee_Id )
+        div.form-group 
+            label.EmployeeAttr(for='Employee_Department') Employee_Department
+            input#Employee_Department(type='text', name='Employee_Department', value= Employee_Department )  
+        input(class="btn btn-success" type="submit") 
+    
+    script. 
+        document.forms['EmployeeForm'].addEventListener('submit', (event) => { 
+            event.preventDefault(); 
+            // TODO do something here to show user that form is being submitted 
+            fetch(event.target.action, { 
+                method: 'PUT', 
+                body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+            }).then((resp) => { 
+                return resp.json(); // or resp.text() or whatever the server sends 
+            }).then((body) => { 
+                alert("Update succeded");
+                // TODO handle body 
+            }).catch((error) => { 
+                // TODO handle error 
+                alert("Update failed " + error );
+            }); 
+        }); 

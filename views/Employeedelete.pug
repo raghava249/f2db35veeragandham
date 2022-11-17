@@ -1,0 +1,56 @@
+extends layout 
+ 
+block content 
+  h1(class="container-fluid p-2 bg-secondary text-dark text-center")= title 
+ 
+  if (toShow == null) 
+    h2 No instance to delete 
+  else 
+    - let Employeeid = toShow._id 
+    - let Employee_Name = toShow.Employee_Name 
+    - let Employee_Salary = toShow.Employee_Salary 
+    - let Employee_Id = toShow.Employee_Id 
+    - let Employee_Department = toShow.Employee_Department 
+    - let actionid = "/resource/Employee/" + Employeeid 
+    script let actionid = "#{actionid}" 
+    div(class = 'p-2 text-center text-dark',style='background-color:blue') 
+      div.row 
+        div(class='EmployeeAttr mr-3') Employee id is: 
+        div #{Employeeid} 
+      div.row 
+        div(class='EmployeeAttr mr-3') Employee Name is: 
+        div #{Employee_Name} 
+      div.row 
+        div(class='EmployeeAttr mr-3') Employee Salary is: 
+        div #{Employee_Salary} 
+      div.row 
+        div(class='EmployeeAttr mr-3') Employee Id is: 
+        div #{Employee_Id} 
+ 
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete 
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel 
+ 
+  script. 
+    function cancel() { 
+      // Go back to the home page for the Employee collection 
+      window.location.href='/Employee' 
+    } 
+  script. 
+    function deleteOnid() { 
+      console.log("starting delete") 
+      // delete first 
+      fetch(actionid, { 
+        method: 'DELETE'      
+        // Don't need a body for the delete 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Delete succeded") 
+        window.location.href='/Employee' 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Delete failed " + error ) 
+      }); 
+    } 
+ 

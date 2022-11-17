@@ -1,0 +1,37 @@
+extends layout 
+ 
+block content 
+  h1(class="container-fluid p-2 bg-secondary text-dark text-center")= title 
+ 
+  form(id='EmployeeForm',class = 'p-2 text-center text-dark',style='background-color:blue' action="/resource/Employee", method="POST") 
+    div.form-group 
+        label.EmployeeAttr(for='Employee_Name' style="margin-right:5px") EmployeeName 
+        input#Employee_Name(type='text', name='Employee_Name' style="width:500px;") 
+    div.form-group 
+        label.EmployeeAttr(for='Employee_Salary' style="margin-right:5px") Employee_Salary 
+        input#Employee_Salary(type='text', name='Employee_Salary' style="width:500px;") 
+    div.form-group 
+        label.EmployeeAttr(for='Employee_Id' style="margin-right:5px") Employee_Id
+        input#Employee_Id(type='number', name='Employee_Id' style="width:500px;")
+    div.form-group 
+        label.EmployeeAttr(for='Employee_Department' style="margin-right:5px") Employee_Department
+        input#Employee_Department(type='text', name='Employee_Department' style="width:500px;")  
+    input(class="btn btn-success" type="submit") 
+ 
+  script. 
+    document.forms['EmployeeForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'POST', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Save succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Save failed " + error ) 
+      }); 
+    }); 
